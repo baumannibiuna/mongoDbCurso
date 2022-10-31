@@ -19,7 +19,7 @@ import com.baumannibiuna.mongoDbCurso.services.UserService;
 
 @RestController
 @RequestMapping(value = "/users")
-public class UserResource {
+public class UserResource {				//esta classe é o end-point da aplicaçao
 	
 	@Autowired
 	private UserService service;
@@ -34,7 +34,6 @@ public class UserResource {
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	public ResponseEntity<UserDTO> FindById(@PathVariable String id) {
 		User obj = service.findById(id);
-
 		return ResponseEntity.ok().body(new UserDTO(obj));
 	}
 	
@@ -43,10 +42,14 @@ public class UserResource {
 	public ResponseEntity<Void> insert(@RequestBody UserDTO objDto) {
 		User obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();		
 		return ResponseEntity.created(uri).build();
 	}
 	
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+ 	public ResponseEntity<Void> delete(@PathVariable String id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
 
 }
