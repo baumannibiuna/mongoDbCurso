@@ -20,6 +20,7 @@ import com.baumannibiuna.mongoDbCurso.services.UserService;
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {				//esta classe é o end-point da aplicaçao
+										//CRUD completo com as annotations do Spring
 	
 	@Autowired
 	private UserService service;
